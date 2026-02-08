@@ -1,0 +1,131 @@
+﻿@page "/"
+
+<PageTitle>Static Webstore</PageTitle>
+
+<section class="hero" id="catalog">
+	<div class="hero-text">
+		<h1>Small-batch coffee and heritage coins.</h1>
+		<p>
+			A curated shop for roasted coffee and numismatic World War 2 coins.
+			Every item is listed with clear sizes and denominations, no add-ons or scripts.
+		</p>
+		<div class="hero-actions">
+			<a class="button primary" href="#coffee">Browse coffee</a>
+			<a class="button ghost" href="#coins">Browse coins</a>
+		</div>
+	</div>
+	<div class="hero-card">
+		<h2>Highlights</h2>
+		<ul>
+			<li>Roasted coffee in 250 g and 500 g bags</li>
+			<li>Numismatic World War 2 coins in 2 and 5 denominations</li>
+			<li>Static, fast, and readable on any device</li>
+		</ul>
+	</div>
+</section>
+
+<section class="section" id="coffee">
+	<div class="section-header">
+		<h2>Roasted Coffee</h2>
+		<p>Freshly roasted beans, packaged for clean storage and easy brewing.</p>
+	</div>
+	@RenderProduct(products[0])
+</section>
+
+<section class="section" id="coins">
+	<div class="section-header">
+		<h2>Numismatic World War 2 Coins</h2>
+		<p>Well-preserved coins selected for collectors and history enthusiasts.</p>
+	</div>
+	@RenderProduct(products[1])
+</section>
+
+<section class="section" id="ordering">
+	<div class="section-header">
+		<h2>Ordering</h2>
+		<p>
+			To place an order, email <strong>sales@staticwebstore.example</strong> with the product
+			name, variant, quantity, and shipping destination. You will receive a confirmation
+			and an invoice.
+		</p>
+	</div>
+	<div class="notice">
+		We accept bank transfer and invoice-based payments. No client-side scripts are used.
+	</div>
+</section>
+
+@code {
+	private readonly List<Product> products = new()
+	{
+		new Product(
+			"Roasted Coffee",
+			"Balanced, aromatic roast with notes of cocoa and citrus.",
+			"Small-batch roasted and sealed for freshness.",
+			new List<Variant>
+			{
+				new Variant("250 gram bag", "$14.00"),
+				new Variant("500 gram bag", "$26.00")
+			}
+		),
+		new Product(
+			"Numismatic World War 2 Coins",
+			"Historical coins curated for collectors.",
+			"Each coin is inspected and packaged with protective sleeves.",
+			new List<Variant>
+			{
+				new Variant("2 denomination", "$48.00"),
+				new Variant("5 denomination", "$82.00")
+			}
+		)
+	};
+
+	private static RenderFragment RenderProduct(Product product) => builder =>
+	{
+		builder.OpenElement(0, "article");
+		builder.AddAttribute(1, "class", "product-card");
+
+		builder.OpenElement(2, "div");
+		builder.AddAttribute(3, "class", "product-head");
+		builder.OpenElement(4, "h3");
+		builder.AddContent(5, product.Name);
+		builder.CloseElement();
+		builder.OpenElement(6, "p");
+		builder.AddAttribute(7, "class", "product-tagline");
+		builder.AddContent(8, product.Tagline);
+		builder.CloseElement();
+		builder.CloseElement();
+
+		builder.OpenElement(9, "p");
+		builder.AddAttribute(10, "class", "product-description");
+		builder.AddContent(11, product.Description);
+		builder.CloseElement();
+
+		builder.OpenElement(12, "div");
+		builder.AddAttribute(13, "class", "variant-list");
+		foreach (var variant in product.Variants)
+		{
+			builder.OpenElement(14, "div");
+			builder.AddAttribute(15, "class", "variant-row");
+			builder.OpenElement(16, "div");
+			builder.AddAttribute(17, "class", "variant-name");
+			builder.AddContent(18, variant.Name);
+			builder.CloseElement();
+			builder.OpenElement(19, "div");
+			builder.AddAttribute(20, "class", "variant-price");
+			builder.AddContent(21, variant.Price);
+			builder.CloseElement();
+			builder.CloseElement();
+		}
+		builder.CloseElement();
+
+		builder.CloseElement();
+	};
+
+	private sealed record Product(
+		string Name,
+		string Tagline,
+		string Description,
+		List<Variant> Variants);
+
+	private sealed record Variant(string Name, string Price);
+}

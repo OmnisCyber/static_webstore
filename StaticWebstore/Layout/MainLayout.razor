@@ -1,0 +1,29 @@
+﻿@inherits LayoutComponentBase
+
+<div class="site">
+    <header class="site-header">
+        <div class="container header-inner">
+            <div class="brand">
+                <span class="brand-mark">★</span>
+                <div class="brand-text">
+                    <div class="brand-title">Static Webstore</div>
+                    <div class="brand-subtitle">Coffee & Heritage Collectibles</div>
+                </div>
+            </div>
+            <NavMenu />
+        </div>
+    </header>
+
+    <main class="site-main">
+        <div class="container">
+            @Body
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div>© 2026 Static Webstore. All rights reserved.</div>
+            <div>Contact: sales@staticwebstore.example</div>
+        </div>
+    </footer>
+</div>
